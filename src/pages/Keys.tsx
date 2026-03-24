@@ -207,7 +207,7 @@ export default function Keys() {
       model: data.model?.toString() ?? "",
       apiKey: data.apiKey?.toString() ?? "",
       family: data.family?.toString() ?? "",
-      isDefault: false,
+      isDefault: 0,
     });
     (event.target as HTMLFormElement).reset();
   };
@@ -275,29 +275,27 @@ export default function Keys() {
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-3 rtl:space-x-reverse pt-2">
-                    {file.isDefault === true && (
+                    {file.isDefault === 1 && (
                       <div className="px-3 py-1 rounded-full bg-green-100 text-green-800 text-sm font-medium">
                         {`⭐ ${t("common.default")}`}
                       </div>
                     )}
-                    {file.isDefault === false && (
+                    {file.isDefault === 0 && (
                       <Button
                         variant="warning"
                         className="flex items-center gap-3 bg-[#007acc] hover:bg-[#0062a3] text-white font-semibold py-2 px-4 rounded transition-colors duration-200"
                         onClick={() => {
                           const oldDefault = apiKeys?.find(
-                            (apiKey) => apiKey.isDefault === true,
+                            (apiKey) => apiKey.isDefault === 1,
                           );
                           if (oldDefault) {
                             db.apiKeys.update(oldDefault.id, {
-                              isDefault: false,
+                              isDefault: 0,
                             });
                           }
                           db.apiKeys.update(file.id, {
-                            isDefault: true,
+                            isDefault: 1,
                           });
-                          localStorage.setItem("apiKey", file.apiKey ?? "");
-                          localStorage.setItem("model", file.model ?? "");
                         }}
                       >
                         {`⭐ ${t("common.default")}`}

@@ -27,12 +27,6 @@ import {
   isTranslationLanguageCodeSupported,
 } from "../utils/translationLanguages";
 
-const head =
-  typeof window !== "undefined" ? localStorage.getItem("apiKey") : "fgvr";
-const modele =
-  typeof window !== "undefined" ? localStorage.getItem("model") : "fiewio";
-const genAI = new GoogleGenAI({ apiKey: head ?? "" });
-
 function getStoredTargetLanguageCode() {
   if (typeof window === "undefined") {
     return DEFAULT_TARGET_LANGUAGE_CODE;
@@ -79,8 +73,13 @@ ${text}`;
 }
 
 async function translateSub(text: string, targetLanguagePromptName: string) {
+  console.log("Translating with Gemini...");
+  const key = await db.apiKeys.where("isDefault").equals(1).first();
+
+  const genAI = new GoogleGenAI({ apiKey: key?.apiKey ?? "" });
+
   const response = await genAI.models.generateContent({
-    model: modele ?? "grtegt",
+    model: key?.model ?? "grtegt",
     contents: buildTranslationPrompt(text, targetLanguagePromptName),
   });
   return response.text ?? "";
@@ -236,7 +235,7 @@ export default function Home() {
   const selectedTargetLanguage =
     getTranslationLanguageByCode(targetLanguageCode);
 
-  const apiKeys = useLiveQuery(() => db.apiKeys.toArray());
+  const countKeys = useLiveQuery(() => db.apiKeys.count());
   const files = useLiveQuery(() => db.subtitles.toArray());
 
   const handleFileChange = async (
@@ -360,7 +359,10 @@ export default function Home() {
       if (file.filename.endsWith(".srt")) {
         const parsetString = file.split?.join(" ||| ");
         let data = "";
-        const currentKey = apiKeys?.find((k) => k.isDefault === true);
+        const currentKey = await db.apiKeys
+          .where("isDefault")
+          .equals(1)
+          .first();
         if (currentKey?.family !== "gemini") {
           data = await postTranslateWithFetch({
             content: parsetString,
@@ -394,7 +396,10 @@ export default function Home() {
         const parsetString = cleaned.join(" ||| "); // filterDrawingCommands(uniqueDialogs)?.join(" ||| ");
 
         let data = "";
-        const currentKey = apiKeys?.find((k) => k.isDefault === true);
+        const currentKey = await db.apiKeys
+          .where("isDefault")
+          .equals(1)
+          .first();
         if (currentKey?.family !== "gemini") {
           data = await postTranslateWithFetch({
             content: parsetString,
@@ -469,7 +474,7 @@ export default function Home() {
   };
   return (
     <div className="flex min-h-screen w-full flex-col items-center gap-8">
-      {apiKeys && apiKeys?.length > 0 && (
+      {countKeys && countKeys > 0 && (
         <div className="w-full flex justify-center">
           <div>
             <div
@@ -513,7 +518,7 @@ export default function Home() {
         </div>
       )}
       <main className="mx-auto flex w-full flex-col items-center justify-start gap-8">
-        {apiKeys && apiKeys?.length > 0 && (
+        {countKeys && countKeys > 0 && (
           <div className="mx-auto flex w-full max-w-4xl flex-col items-center px-4">
             <br />
             <br />
@@ -640,7 +645,7 @@ export default function Home() {
             </ul>
           </div>
         )}
-        {apiKeys && apiKeys?.length === 0 && (
+        {countKeys === 0 && (
           <div>
             <div>
               <div

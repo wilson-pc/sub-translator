@@ -6,7 +6,7 @@ interface ApiKey {
   family: string;
   model: string;
   apiKey: string;
-  isDefault: boolean;
+  isDefault: number;
 }
 
 const db = new Dexie("Database") as Dexie & {
@@ -22,7 +22,7 @@ const db = new Dexie("Database") as Dexie & {
 
 // Schema declaration:
 db.version(1).stores({
-  apiKeys: "id, model, apiKey", // primary key "id" (for the runtime!)
+  apiKeys: "id, model, apiKey, isDefault", // primary key "id" (for the runtime!)
   subtitles: "id, original, split, splitTranslated, filename, state", // primary key "id" (for the runtime!)
 });
 
