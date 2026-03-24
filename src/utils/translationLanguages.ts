@@ -1,0 +1,486 @@
+export type TranslationLanguageOption = {
+  code: string;
+  label: string;
+  promptName: string;
+  fileSuffix: string;
+};
+
+export const DEFAULT_TARGET_LANGUAGE_CODE = "es-419";
+
+// Gemini text generation is multilingual. This catalog provides a broad target
+// language list suitable for subtitle translation workflows.
+export const GEMINI_TRANSLATION_LANGUAGES: TranslationLanguageOption[] = [
+  {
+    code: "es-419",
+    label: "Espanol (Latinoamerica)",
+    promptName: "Latin American Spanish",
+    fileSuffix: "es-419",
+  },
+  {
+    code: "es-US",
+    label: "Espanol (Estados Unidos)",
+    promptName: "US Spanish",
+    fileSuffix: "es-US",
+  },
+  {
+    code: "es-ES",
+    label: "Espanol (Espana)",
+    promptName: "European Spanish",
+    fileSuffix: "es-ES",
+  },
+  {
+    code: "en-US",
+    label: "English (United States)",
+    promptName: "US English",
+    fileSuffix: "en-US",
+  },
+  {
+    code: "en-GB",
+    label: "English (United Kingdom)",
+    promptName: "British English",
+    fileSuffix: "en-GB",
+  },
+  {
+    code: "pt-BR",
+    label: "Portugues (Brasil)",
+    promptName: "Brazilian Portuguese",
+    fileSuffix: "pt-BR",
+  },
+  {
+    code: "pt-PT",
+    label: "Portugues (Portugal)",
+    promptName: "European Portuguese",
+    fileSuffix: "pt-PT",
+  },
+  {
+    code: "fr-FR",
+    label: "Francais (France)",
+    promptName: "French",
+    fileSuffix: "fr-FR",
+  },
+  {
+    code: "fr-CA",
+    label: "Francais (Canada)",
+    promptName: "Canadian French",
+    fileSuffix: "fr-CA",
+  },
+  {
+    code: "de-DE",
+    label: "Deutsch",
+    promptName: "German",
+    fileSuffix: "de-DE",
+  },
+  {
+    code: "it-IT",
+    label: "Italiano",
+    promptName: "Italian",
+    fileSuffix: "it-IT",
+  },
+  {
+    code: "ja-JP",
+    label: "Japanese",
+    promptName: "Japanese",
+    fileSuffix: "ja-JP",
+  },
+  {
+    code: "ko-KR",
+    label: "Korean",
+    promptName: "Korean",
+    fileSuffix: "ko-KR",
+  },
+  {
+    code: "zh-CN",
+    label: "Chinese (Simplified)",
+    promptName: "Simplified Chinese",
+    fileSuffix: "zh-CN",
+  },
+  {
+    code: "zh-TW",
+    label: "Chinese (Traditional)",
+    promptName: "Traditional Chinese",
+    fileSuffix: "zh-TW",
+  },
+  { code: "ar", label: "Arabic", promptName: "Arabic", fileSuffix: "ar" },
+  { code: "af", label: "Afrikaans", promptName: "Afrikaans", fileSuffix: "af" },
+  { code: "am", label: "Amharic", promptName: "Amharic", fileSuffix: "am" },
+  {
+    code: "as-IN",
+    label: "Assamese",
+    promptName: "Assamese",
+    fileSuffix: "as-IN",
+  },
+  {
+    code: "az-AZ",
+    label: "Azerbaijani",
+    promptName: "Azerbaijani",
+    fileSuffix: "az-AZ",
+  },
+  {
+    code: "be-BY",
+    label: "Belarusian",
+    promptName: "Belarusian",
+    fileSuffix: "be-BY",
+  },
+  {
+    code: "bg-BG",
+    label: "Bulgarian",
+    promptName: "Bulgarian",
+    fileSuffix: "bg-BG",
+  },
+  {
+    code: "bn-BD",
+    label: "Bengali",
+    promptName: "Bengali",
+    fileSuffix: "bn-BD",
+  },
+  {
+    code: "bs-BA",
+    label: "Bosnian",
+    promptName: "Bosnian",
+    fileSuffix: "bs-BA",
+  },
+  {
+    code: "ca-ES",
+    label: "Catalan",
+    promptName: "Catalan",
+    fileSuffix: "ca-ES",
+  },
+  {
+    code: "ceb-PH",
+    label: "Cebuano",
+    promptName: "Cebuano",
+    fileSuffix: "ceb-PH",
+  },
+  { code: "cs-CZ", label: "Czech", promptName: "Czech", fileSuffix: "cs-CZ" },
+  { code: "cy-GB", label: "Welsh", promptName: "Welsh", fileSuffix: "cy-GB" },
+  { code: "da-DK", label: "Danish", promptName: "Danish", fileSuffix: "da-DK" },
+  { code: "el-GR", label: "Greek", promptName: "Greek", fileSuffix: "el-GR" },
+  { code: "eo", label: "Esperanto", promptName: "Esperanto", fileSuffix: "eo" },
+  {
+    code: "et-EE",
+    label: "Estonian",
+    promptName: "Estonian",
+    fileSuffix: "et-EE",
+  },
+  { code: "eu-ES", label: "Basque", promptName: "Basque", fileSuffix: "eu-ES" },
+  {
+    code: "fa-IR",
+    label: "Persian",
+    promptName: "Persian",
+    fileSuffix: "fa-IR",
+  },
+  {
+    code: "fi-FI",
+    label: "Finnish",
+    promptName: "Finnish",
+    fileSuffix: "fi-FI",
+  },
+  {
+    code: "fil-PH",
+    label: "Filipino",
+    promptName: "Filipino",
+    fileSuffix: "fil-PH",
+  },
+  {
+    code: "fy-NL",
+    label: "Frisian",
+    promptName: "Frisian",
+    fileSuffix: "fy-NL",
+  },
+  { code: "ga-IE", label: "Irish", promptName: "Irish", fileSuffix: "ga-IE" },
+  {
+    code: "gd-GB",
+    label: "Scots Gaelic",
+    promptName: "Scots Gaelic",
+    fileSuffix: "gd-GB",
+  },
+  {
+    code: "gl-ES",
+    label: "Galician",
+    promptName: "Galician",
+    fileSuffix: "gl-ES",
+  },
+  {
+    code: "gu-IN",
+    label: "Gujarati",
+    promptName: "Gujarati",
+    fileSuffix: "gu-IN",
+  },
+  { code: "ha-NG", label: "Hausa", promptName: "Hausa", fileSuffix: "ha-NG" },
+  {
+    code: "haw-US",
+    label: "Hawaiian",
+    promptName: "Hawaiian",
+    fileSuffix: "haw-US",
+  },
+  { code: "he-IL", label: "Hebrew", promptName: "Hebrew", fileSuffix: "he-IL" },
+  { code: "hi-IN", label: "Hindi", promptName: "Hindi", fileSuffix: "hi-IN" },
+  {
+    code: "hr-HR",
+    label: "Croatian",
+    promptName: "Croatian",
+    fileSuffix: "hr-HR",
+  },
+  {
+    code: "ht-HT",
+    label: "Haitian Creole",
+    promptName: "Haitian Creole",
+    fileSuffix: "ht-HT",
+  },
+  {
+    code: "hu-HU",
+    label: "Hungarian",
+    promptName: "Hungarian",
+    fileSuffix: "hu-HU",
+  },
+  {
+    code: "hy-AM",
+    label: "Armenian",
+    promptName: "Armenian",
+    fileSuffix: "hy-AM",
+  },
+  {
+    code: "id-ID",
+    label: "Indonesian",
+    promptName: "Indonesian",
+    fileSuffix: "id-ID",
+  },
+  { code: "ig-NG", label: "Igbo", promptName: "Igbo", fileSuffix: "ig-NG" },
+  {
+    code: "is-IS",
+    label: "Icelandic",
+    promptName: "Icelandic",
+    fileSuffix: "is-IS",
+  },
+  {
+    code: "jv-ID",
+    label: "Javanese",
+    promptName: "Javanese",
+    fileSuffix: "jv-ID",
+  },
+  {
+    code: "ka-GE",
+    label: "Georgian",
+    promptName: "Georgian",
+    fileSuffix: "ka-GE",
+  },
+  { code: "kk-KZ", label: "Kazakh", promptName: "Kazakh", fileSuffix: "kk-KZ" },
+  { code: "km-KH", label: "Khmer", promptName: "Khmer", fileSuffix: "km-KH" },
+  {
+    code: "kn-IN",
+    label: "Kannada",
+    promptName: "Kannada",
+    fileSuffix: "kn-IN",
+  },
+  {
+    code: "ku-TR",
+    label: "Kurdish",
+    promptName: "Kurdish",
+    fileSuffix: "ku-TR",
+  },
+  { code: "ky-KG", label: "Kyrgyz", promptName: "Kyrgyz", fileSuffix: "ky-KG" },
+  { code: "la", label: "Latin", promptName: "Latin", fileSuffix: "la" },
+  {
+    code: "lb-LU",
+    label: "Luxembourgish",
+    promptName: "Luxembourgish",
+    fileSuffix: "lb-LU",
+  },
+  { code: "lo-LA", label: "Lao", promptName: "Lao", fileSuffix: "lo-LA" },
+  {
+    code: "lt-LT",
+    label: "Lithuanian",
+    promptName: "Lithuanian",
+    fileSuffix: "lt-LT",
+  },
+  {
+    code: "lv-LV",
+    label: "Latvian",
+    promptName: "Latvian",
+    fileSuffix: "lv-LV",
+  },
+  {
+    code: "mg-MG",
+    label: "Malagasy",
+    promptName: "Malagasy",
+    fileSuffix: "mg-MG",
+  },
+  { code: "mi-NZ", label: "Maori", promptName: "Maori", fileSuffix: "mi-NZ" },
+  {
+    code: "mk-MK",
+    label: "Macedonian",
+    promptName: "Macedonian",
+    fileSuffix: "mk-MK",
+  },
+  {
+    code: "ml-IN",
+    label: "Malayalam",
+    promptName: "Malayalam",
+    fileSuffix: "ml-IN",
+  },
+  {
+    code: "mn-MN",
+    label: "Mongolian",
+    promptName: "Mongolian",
+    fileSuffix: "mn-MN",
+  },
+  {
+    code: "mr-IN",
+    label: "Marathi",
+    promptName: "Marathi",
+    fileSuffix: "mr-IN",
+  },
+  { code: "ms-MY", label: "Malay", promptName: "Malay", fileSuffix: "ms-MY" },
+  {
+    code: "mt-MT",
+    label: "Maltese",
+    promptName: "Maltese",
+    fileSuffix: "mt-MT",
+  },
+  {
+    code: "my-MM",
+    label: "Burmese",
+    promptName: "Burmese",
+    fileSuffix: "my-MM",
+  },
+  { code: "ne-NP", label: "Nepali", promptName: "Nepali", fileSuffix: "ne-NP" },
+  { code: "nl-NL", label: "Dutch", promptName: "Dutch", fileSuffix: "nl-NL" },
+  {
+    code: "no-NO",
+    label: "Norwegian",
+    promptName: "Norwegian",
+    fileSuffix: "no-NO",
+  },
+  { code: "or-IN", label: "Odia", promptName: "Odia", fileSuffix: "or-IN" },
+  {
+    code: "pa-IN",
+    label: "Punjabi",
+    promptName: "Punjabi",
+    fileSuffix: "pa-IN",
+  },
+  { code: "pl-PL", label: "Polish", promptName: "Polish", fileSuffix: "pl-PL" },
+  { code: "ps-AF", label: "Pashto", promptName: "Pashto", fileSuffix: "ps-AF" },
+  {
+    code: "ro-RO",
+    label: "Romanian",
+    promptName: "Romanian",
+    fileSuffix: "ro-RO",
+  },
+  {
+    code: "ru-RU",
+    label: "Russian",
+    promptName: "Russian",
+    fileSuffix: "ru-RU",
+  },
+  {
+    code: "rw-RW",
+    label: "Kinyarwanda",
+    promptName: "Kinyarwanda",
+    fileSuffix: "rw-RW",
+  },
+  { code: "sd-PK", label: "Sindhi", promptName: "Sindhi", fileSuffix: "sd-PK" },
+  {
+    code: "si-LK",
+    label: "Sinhala",
+    promptName: "Sinhala",
+    fileSuffix: "si-LK",
+  },
+  { code: "sk-SK", label: "Slovak", promptName: "Slovak", fileSuffix: "sk-SK" },
+  {
+    code: "sl-SI",
+    label: "Slovenian",
+    promptName: "Slovenian",
+    fileSuffix: "sl-SI",
+  },
+  { code: "sm-WS", label: "Samoan", promptName: "Samoan", fileSuffix: "sm-WS" },
+  { code: "sn-ZW", label: "Shona", promptName: "Shona", fileSuffix: "sn-ZW" },
+  { code: "so-SO", label: "Somali", promptName: "Somali", fileSuffix: "so-SO" },
+  {
+    code: "sq-AL",
+    label: "Albanian",
+    promptName: "Albanian",
+    fileSuffix: "sq-AL",
+  },
+  {
+    code: "sr-RS",
+    label: "Serbian",
+    promptName: "Serbian",
+    fileSuffix: "sr-RS",
+  },
+  {
+    code: "st-LS",
+    label: "Sesotho",
+    promptName: "Sesotho",
+    fileSuffix: "st-LS",
+  },
+  {
+    code: "su-ID",
+    label: "Sundanese",
+    promptName: "Sundanese",
+    fileSuffix: "su-ID",
+  },
+  {
+    code: "sv-SE",
+    label: "Swedish",
+    promptName: "Swedish",
+    fileSuffix: "sv-SE",
+  },
+  {
+    code: "sw-KE",
+    label: "Swahili",
+    promptName: "Swahili",
+    fileSuffix: "sw-KE",
+  },
+  { code: "ta-IN", label: "Tamil", promptName: "Tamil", fileSuffix: "ta-IN" },
+  { code: "te-IN", label: "Telugu", promptName: "Telugu", fileSuffix: "te-IN" },
+  { code: "tg-TJ", label: "Tajik", promptName: "Tajik", fileSuffix: "tg-TJ" },
+  { code: "th-TH", label: "Thai", promptName: "Thai", fileSuffix: "th-TH" },
+  {
+    code: "tk-TM",
+    label: "Turkmen",
+    promptName: "Turkmen",
+    fileSuffix: "tk-TM",
+  },
+  {
+    code: "tr-TR",
+    label: "Turkish",
+    promptName: "Turkish",
+    fileSuffix: "tr-TR",
+  },
+  { code: "tt-RU", label: "Tatar", promptName: "Tatar", fileSuffix: "tt-RU" },
+  { code: "ug-CN", label: "Uyghur", promptName: "Uyghur", fileSuffix: "ug-CN" },
+  {
+    code: "uk-UA",
+    label: "Ukrainian",
+    promptName: "Ukrainian",
+    fileSuffix: "uk-UA",
+  },
+  { code: "ur-PK", label: "Urdu", promptName: "Urdu", fileSuffix: "ur-PK" },
+  { code: "uz-UZ", label: "Uzbek", promptName: "Uzbek", fileSuffix: "uz-UZ" },
+  {
+    code: "vi-VN",
+    label: "Vietnamese",
+    promptName: "Vietnamese",
+    fileSuffix: "vi-VN",
+  },
+  { code: "xh-ZA", label: "Xhosa", promptName: "Xhosa", fileSuffix: "xh-ZA" },
+  { code: "yo-NG", label: "Yoruba", promptName: "Yoruba", fileSuffix: "yo-NG" },
+  { code: "zu-ZA", label: "Zulu", promptName: "Zulu", fileSuffix: "zu-ZA" },
+];
+
+export function getTranslationLanguageByCode(
+  code: string | null | undefined,
+): TranslationLanguageOption {
+  return (
+    GEMINI_TRANSLATION_LANGUAGES.find((language) => language.code === code) ??
+    GEMINI_TRANSLATION_LANGUAGES[0]
+  );
+}
+
+export function isTranslationLanguageCodeSupported(
+  code: string | null | undefined,
+): code is string {
+  return GEMINI_TRANSLATION_LANGUAGES.some(
+    (language) => language.code === code,
+  );
+}
