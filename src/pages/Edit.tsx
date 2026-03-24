@@ -83,7 +83,7 @@ export default function Edit() {
 
       await db.subtitles
         .where("id")
-        .aboveOrEqual(subFile.id)
+        .equals(subFile.id)
         .modify({ splitTranslated: newTranslated });
     }
   };
@@ -95,7 +95,7 @@ export default function Edit() {
 
       await db.subtitles
         .where("id")
-        .aboveOrEqual(subFile.id)
+        .equals(subFile.id)
         .modify({ splitTranslated: newTranslated });
     }
   };
@@ -106,7 +106,7 @@ export default function Edit() {
 
       await db.subtitles
         .where("id")
-        .aboveOrEqual(subFile.id)
+        .equals(subFile.id)
         .modify({ splitTranslated: newTranslated });
     }
   };

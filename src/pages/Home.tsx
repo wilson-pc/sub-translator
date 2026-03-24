@@ -353,7 +353,8 @@ export default function Home() {
     );
 
     try {
-      await db.subtitles.where("id").aboveOrEqual(file.id).modify({
+      console.log(file);
+      await db.subtitles.where("id").equals(file.id).modify({
         state: "PROCESSING",
         targetLanguageCode: activeTargetLanguageCode,
       });
@@ -379,7 +380,7 @@ export default function Home() {
         const restored = data
           .split(/\s*\|\|\|\s*/)
           .map((parte: any) => parte.trim());
-        await db.subtitles.where("id").aboveOrEqual(file.id).modify({
+        await db.subtitles.where("id").equals(file.id).modify({
           state: "DONE",
           splitTranslated: restored,
           targetLanguageCode: activeTargetLanguageCode,
@@ -422,7 +423,7 @@ export default function Home() {
           translatedClean,
           patternToOriginalMap,
         );
-        await db.subtitles.where("id").aboveOrEqual(file.id).modify({
+        await db.subtitles.where("id").equals(file.id).modify({
           state: "DONE",
           splitTranslated: restored.items,
           targetLanguageCode: activeTargetLanguageCode,
@@ -432,7 +433,7 @@ export default function Home() {
       }
     } catch (error) {
       console.log(error);
-      await db.subtitles.where("id").aboveOrEqual(file.id).modify({
+      await db.subtitles.where("id").equals(file.id).modify({
         state: "ERROR",
         targetLanguageCode: activeTargetLanguageCode,
       });
