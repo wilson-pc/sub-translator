@@ -1,11 +1,89 @@
-# React + TypeScript + Vite
+# SubTranslator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Free AI-powered subtitle translator. Upload `.srt` or `.ass` files, choose a target language from 90+ options, and translate using your own API key (Gemini, OpenAI, Anthropic, DeepSeek, or Kimi). Everything stays in your browser — no account required.
 
-Currently, two official plugins are available:
+**Live:** https://subtranslator.hibapp.com · https://sub-translator.wilson-pc.workers.dev · **Repo:** https://github.com/wilson-pc/sub-translator
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+
+## Stack
+
+- **Frontend:** React 19 + TypeScript + Vite + Tailwind CSS v4
+- **Backend:** Cloudflare Workers (Hono)
+- **Storage:** IndexedDB (Dexie) — browser only
+- **i18n:** react-i18next (English / Spanish)
+
+---
+
+## Getting started
+
+### Prerequisites
+
+- Node.js ≥ 18
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up) with Wrangler authenticated (`npx wrangler login`)
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run development server
+
+```bash
+npm run dev
+```
+
+Opens at `http://localhost:5173`. The Cloudflare Worker runs locally via Vite's dev proxy.
+
+---
+
+## Build
+
+Compiles TypeScript and bundles the app + worker:
+
+```bash
+npm run build
+```
+
+Output is placed in `dist/`. You can preview the production build locally:
+
+```bash
+npm run preview
+```
+
+---
+
+## Deploy
+
+Builds and deploys to Cloudflare Workers (assets served via Workers Assets):
+
+```bash
+npm run deploy
+```
+
+This runs `wrangler deploy` under the hood. Make sure you are logged in to Wrangler before deploying:
+
+```bash
+npx wrangler login
+```
+
+The worker name and compatibility settings are configured in [`wrangler.jsonc`](wrangler.jsonc).
+
+---
+
+## Other scripts
+
+| Command | Description |
+|---|---|
+| `npm run lint` | Run ESLint across the project |
+| `npm run cf-typegen` | Regenerate Cloudflare Worker type definitions |
+
+---
+
+## License
+
+[MIT](LICENSE)
 
 ## React Compiler
 

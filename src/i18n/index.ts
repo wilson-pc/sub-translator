@@ -58,6 +58,7 @@ const resources = {
           home: "Home",
           about: "About",
           contact: "Contact",
+          keys: "API Keys",
         },
       },
       footer: {
@@ -67,6 +68,7 @@ const resources = {
         privacy: "Privacy",
         terms: "Terms of service",
         rights: "All rights reserved.",
+        github: "GitHub Repository",
       },
       common: {
         save: "Save",
@@ -168,6 +170,7 @@ const resources = {
           home: "Inicio",
           about: "Acerca de",
           contact: "Contacto",
+          keys: "API Keys",
         },
       },
       footer: {
@@ -177,6 +180,7 @@ const resources = {
         privacy: "Privacidad",
         terms: "Terminos de servicio",
         rights: "Todos los derechos reservados.",
+        github: "Repositorio en GitHub",
       },
       common: {
         save: "Guardar",

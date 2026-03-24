@@ -22,27 +22,29 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#inicio"
+                <Link
+                  to="/"
                   className="text-gray-400 hover:text-purple-500 transition-colors"
                 >
                   {t("layout.nav.home")}
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/keys"
+                  className="text-gray-400 hover:text-purple-500 transition-colors"
+                >
+                  {t("layout.nav.keys")}
+                </Link>
               </li>
               <li>
                 <a
-                  href="#acerca"
+                  href="https://github.com/wilson-pc/sub-translator"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-400 hover:text-purple-500 transition-colors"
                 >
-                  {t("layout.nav.about")}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contacto"
-                  className="text-gray-400 hover:text-purple-500 transition-colors"
-                >
-                  {t("layout.nav.contact")}
+                  {t("footer.github")}
                 </a>
               </li>
             </ul>
