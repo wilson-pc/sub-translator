@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function Privacy() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.title = `${t("legal.privacy.title")} – SubTranslator`;
+  }, [t]);
 
   return (
     <section className="mx-auto w-full max-w-4xl px-4 py-8 text-gray-100">

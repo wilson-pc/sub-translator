@@ -11,7 +11,7 @@ import { GoogleGenAI } from "@google/genai";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useTranslation } from "react-i18next";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { nanoid } from "nanoid";
 import {
   deduplicateDialogsGemini,
@@ -223,6 +223,11 @@ function extractDialogsFromASS(subtitleContent: string) {
 
 export default function Home() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.title = "SubTranslator – Free AI Subtitle Translator";
+  }, []);
+
   const [dragActive, setDragActive] = useState(false);
   const [targetLanguageCode, setTargetLanguageCode] = useState(
     getStoredTargetLanguageCode,

@@ -6,6 +6,7 @@ import { restoreDialogsToASS, triggerFileDownload } from "../utils/ass";
 import { useParams } from "react-router";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db/db";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 interface ButtonProps {
@@ -55,6 +56,11 @@ const Button = ({
 
 export default function Edit() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.title = `${t("common.edit")} – SubTranslator`;
+  }, [t]);
+
   const param = useParams();
   console.log(param.id);
   const subFile = useLiveQuery(

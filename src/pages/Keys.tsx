@@ -4,7 +4,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db/db";
 import { nanoid } from "nanoid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 interface ButtonProps {
@@ -179,6 +179,11 @@ const FormComponent = ({
 
 export default function Keys() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.title = `${t("keys.title")} – SubTranslator`;
+  }, [t]);
+
   const apiKeys = useLiveQuery(() => db.apiKeys.toArray());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
