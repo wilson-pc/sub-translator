@@ -353,7 +353,6 @@ export default function Home() {
     );
 
     try {
-      console.log(file);
       await db.subtitles.where("id").equals(file.id).modify({
         state: "PROCESSING",
         targetLanguageCode: activeTargetLanguageCode,
