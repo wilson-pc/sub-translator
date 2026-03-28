@@ -245,7 +245,11 @@ export default function Home() {
     if (files) {
       await db.subtitles.clear();
       const lfiles: SubFile[] = [];
-      for (const element of files) {
+      const sortedFiles = Array.from(files).sort((a, b) =>
+        a.name.localeCompare(b.name),
+      );
+
+      for (const element of sortedFiles) {
         const text = await readFileContents(element);
         const id = nanoid();
         if (element.name.endsWith(".srt")) {
@@ -292,7 +296,11 @@ export default function Home() {
     if (droppedFiles) {
       await db.subtitles.clear();
 
-      for (const element of droppedFiles) {
+      const sortedDroppedFiles = Array.from(droppedFiles).sort((a, b) =>
+        a.name.localeCompare(b.name),
+      );
+
+      for (const element of sortedDroppedFiles) {
         const text = await readFileContents(element);
         const id = nanoid();
         if (element.name.endsWith(".srt")) {
