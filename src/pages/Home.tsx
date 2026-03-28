@@ -342,7 +342,9 @@ export default function Home() {
     console.log(filesDb);
     for (const element of filesDb ?? []) {
       try {
-        await translateSingle(element, targetLanguageCode);
+        if (element.state !== "DONE") {
+          await translateSingle(element, targetLanguageCode);
+        }
       } catch (error) {
         console.log(error);
       }
