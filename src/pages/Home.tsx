@@ -236,6 +236,7 @@ export default function Home() {
     getTranslationLanguageByCode(targetLanguageCode);
 
   const countKeys = useLiveQuery(() => db.apiKeys.count());
+
   const files = useLiveQuery(() => db.subtitles.toArray());
 
   const handleFileChange = async (
@@ -484,7 +485,7 @@ export default function Home() {
   };
   return (
     <div className="flex min-h-screen w-full flex-col items-center gap-8">
-      {countKeys && countKeys > 0 && (
+      {countKeys != undefined && countKeys > 0 && (
         <div className="w-full flex justify-center">
           <div>
             <div
@@ -528,7 +529,7 @@ export default function Home() {
         </div>
       )}
       <main className="mx-auto flex w-full flex-col items-center justify-start gap-8">
-        {countKeys && countKeys > 0 && (
+        {countKeys != undefined && countKeys > 0 && (
           <div className="mx-auto flex w-full max-w-4xl flex-col items-center px-4">
             <br />
             <br />
@@ -627,13 +628,13 @@ export default function Home() {
                             </button>
                           ) : (
                             <button
-                              className="group relative rounded-lg bg-gray-600 px-4 py-2 text-white hover:bg-gray-500"
+                              className="group relative rounded-lg bg-amber-500 px-4 py-2 font-semibold text-white transition-colors hover:bg-amber-600"
                               onClick={() => {
                                 download(file);
                               }}
                             >
                               {t("common.download")}
-                              <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block px-2 py-1 text-xs text-white bg-gray-800 rounded-lg">
+                              <span className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 rounded-lg bg-amber-600 px-2 py-1 text-xs text-white group-hover:block">
                                 {t("home.unresolvedTooltip")}
                               </span>
                             </button>
