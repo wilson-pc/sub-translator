@@ -222,6 +222,10 @@ function extractDialogsFromASS(subtitleContent: string) {
 
 export default function Home() {
   const { t } = useTranslation();
+  const fileNameCollator = new Intl.Collator(undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
 
   useEffect(() => {
     document.title = "SubTranslator – Free AI Subtitle Translator";
@@ -237,7 +241,7 @@ export default function Home() {
 
   const countKeys = useLiveQuery(() => db.apiKeys.count());
 
-  const files = useLiveQuery(() => db.subtitles.toArray());
+  const files = useLiveQuery(() => db.subtitles.orderBy("filename").toArray());
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -247,7 +251,7 @@ export default function Home() {
       await db.subtitles.clear();
       const lfiles: SubFile[] = [];
       const sortedFiles = Array.from(files).sort((a, b) =>
-        a.name.localeCompare(b.name),
+        fileNameCollator.compare(a.name, b.name),
       );
 
       for (const element of sortedFiles) {
@@ -298,7 +302,7 @@ export default function Home() {
       await db.subtitles.clear();
 
       const sortedDroppedFiles = Array.from(droppedFiles).sort((a, b) =>
-        a.name.localeCompare(b.name),
+        fileNameCollator.compare(a.name, b.name),
       );
 
       for (const element of sortedDroppedFiles) {
