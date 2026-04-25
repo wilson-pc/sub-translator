@@ -166,12 +166,12 @@ app.post("/api/translate", async (c) => {
     return new Response(translated);
   }
 
-  const chunks = chunkByDelimiter(content, "|||", 300);
   //deepseek
   //process.env.DEEPSEEK_API_KEY
   //https://api.deepseek.com
 
   if (family === "openai") {
+    const chunks = chunkByDelimiter(content, "|||", 300);
     for (const element of chunks) {
       const resp = await getFullResponseOpenIa(
         element.trim(),
@@ -184,17 +184,15 @@ app.post("/api/translate", async (c) => {
       translated = appendChunkTranslation(translated, resp);
     }
   } else {
-    for (const element of chunks) {
-      const resp = await getFullResponse(
-        element.trim(),
-        urls[family],
-        key,
-        model,
-        targetLanguagePromptName,
-      );
+    const resp = await getFullResponse(
+      content.trim(),
+      urls[family],
+      key,
+      model,
+      targetLanguagePromptName,
+    );
 
-      translated = appendChunkTranslation(translated, resp);
-    }
+    translated = appendChunkTranslation(translated, resp);
   }
   console.log(translated);
   return c.text(translated);
