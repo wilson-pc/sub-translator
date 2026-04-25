@@ -343,8 +343,7 @@ export default function Home() {
   };
 
   const translate = async () => {
-    const filesDb = await db.subtitles.toArray();
-    console.log(filesDb);
+    const filesDb = await db.subtitles.orderBy("filename").toArray();
     for (const element of filesDb ?? []) {
       try {
         if (element.state !== "DONE") {
