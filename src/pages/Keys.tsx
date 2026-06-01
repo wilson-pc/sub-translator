@@ -88,12 +88,8 @@ const FormComponent = ({
           type="text"
           id="name"
           name="name"
-          value={isEditing ? editData.name : undefined}
-          onChange={
-            isEditing
-              ? (e) => setEditData({ ...editData, name: e.target.value })
-              : undefined
-          }
+          value={editData.name}
+          onChange={(e) => setEditData({ ...editData, name: e.target.value })}
           required
           className="mt-1 block w-full p-2 border-2 border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500"
         />
@@ -124,7 +120,10 @@ const FormComponent = ({
             id="family"
             name="family"
             required
-            defaultValue="gemini"
+            value={editData.family}
+            onChange={(e) =>
+              setEditData({ ...editData, family: e.target.value })
+            }
             className="mt-1 block w-full p-2 border-2 border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:border-blue-500"
           >
             <option value="">{t("common.selectOption")}</option>
@@ -147,12 +146,8 @@ const FormComponent = ({
           type="text"
           id="model"
           name="model"
-          value={isEditing ? editData.model : undefined}
-          onChange={
-            isEditing
-              ? (e) => setEditData({ ...editData, model: e.target.value })
-              : undefined
-          }
+          value={editData.model}
+          onChange={(e) => setEditData({ ...editData, model: e.target.value })}
           required
           className="mt-1 block w-full p-2 border-2 border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500"
         />
@@ -168,12 +163,8 @@ const FormComponent = ({
           type="text"
           id="apiKey"
           name="apiKey"
-          value={isEditing ? editData.apiKey : undefined}
-          onChange={
-            isEditing
-              ? (e) => setEditData({ ...editData, apiKey: e.target.value })
-              : undefined
-          }
+          value={editData.apiKey}
+          onChange={(e) => setEditData({ ...editData, apiKey: e.target.value })}
           required
           className="mt-1 block w-full p-2 border-2 border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500"
         />
