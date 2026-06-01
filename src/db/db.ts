@@ -3,6 +3,7 @@ import type { SubFile } from "../models";
 
 interface ApiKey {
   id: string;
+  name: string;
   family: string;
   model: string;
   apiKey: string;
@@ -23,6 +24,11 @@ const db = new Dexie("Database") as Dexie & {
 // Schema declaration:
 db.version(1).stores({
   apiKeys: "id, model, apiKey, isDefault", // primary key "id" (for the runtime!)
+  subtitles: "id, original, split, splitTranslated, filename, state", // primary key "id" (for the runtime!)
+});
+
+db.version(2).stores({
+  apiKeys: "id, model, apiKey, isDefault, name", // primary key "id" (for the runtime!)
   subtitles: "id, original, split, splitTranslated, filename, state", // primary key "id" (for the runtime!)
 });
 

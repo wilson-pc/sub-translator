@@ -240,6 +240,10 @@ export default function Home() {
     getTranslationLanguageByCode(targetLanguageCode);
 
   const countKeys = useLiveQuery(() => db.apiKeys.count());
+  const allApiKeys = useLiveQuery(() => db.apiKeys.toArray());
+  const defaultKey = useLiveQuery(() =>
+    db.apiKeys.where("isDefault").equals(1).first(),
+  );
 
   const files = useLiveQuery(() => db.subtitles.orderBy("filename").toArray());
 
@@ -340,6 +344,18 @@ export default function Home() {
 
     setTargetLanguageCode(nextLanguageCode);
     localStorage.setItem("targetLanguageCode", nextLanguageCode);
+  };
+
+  const handleApiKeyChange = async (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const selectedKeyId = event.target.value;
+
+    // Desmarcar todas las claves como default
+    await db.apiKeys.toCollection().modify({ isDefault: 0 });
+
+    // Marcar la clave seleccionada como default
+    await db.apiKeys.update(selectedKeyId, { isDefault: 1 });
   };
 
   const translate = async () => {
@@ -488,6 +504,38 @@ export default function Home() {
   };
   return (
     <div className="flex min-h-screen w-full flex-col items-center gap-8">
+      {countKeys !== undefined && countKeys > 0 && (
+        <div className="mx-auto w-full max-w-lg pt-8">
+          <div className="mb-6 flex flex-col gap-2 rounded-lg border border-gray-700 bg-gray-800/60 p-4">
+            <label
+              htmlFor="apiKeySelect"
+              className="text-sm font-medium text-gray-200"
+            >
+              {t("common.apiKey")}
+            </label>
+            <select
+              id="apiKeySelect"
+              name="apiKeySelect"
+              value={defaultKey?.id ?? ""}
+              onChange={handleApiKeyChange}
+              className="w-full rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-sm text-gray-100 outline-none transition-colors focus:border-blue-500"
+            >
+              <option value="">{t("common.selectOption")}</option>
+              {allApiKeys?.map((key) => (
+                <option key={key.id} value={key.id}>
+                  {key.name} - {key.model} ({key.family})
+                </option>
+              ))}
+            </select>
+            <Link
+              to={"/keys"}
+              className="text-xs text-blue-400 hover:text-blue-300"
+            >
+              {t("home.noApiKeyLink")}
+            </Link>
+          </div>
+        </div>
+      )}
       {countKeys != undefined && countKeys > 0 && (
         <div className="w-full flex justify-center">
           <div>

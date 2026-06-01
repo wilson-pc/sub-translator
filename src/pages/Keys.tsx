@@ -50,8 +50,9 @@ const Button = ({
 
 interface FormComponentProps {
   isEditing: boolean;
-  editData: { family: string; model: string; apiKey: string };
+  editData: { name: string; family: string; model: string; apiKey: string };
   setEditData: (data: {
+    name: string;
     family: string;
     model: string;
     apiKey: string;
@@ -76,6 +77,27 @@ const FormComponent = ({
       className="space-y-6 p-8 bg-gray-50 dark:bg-gray-900 rounded-xl shadow-md w-full max-w-md"
       onSubmit={isEditing ? undefined : onSubmit}
     >
+      <div>
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-700"
+        >
+          {t("common.name")}
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={isEditing ? editData.name : undefined}
+          onChange={
+            isEditing
+              ? (e) => setEditData({ ...editData, name: e.target.value })
+              : undefined
+          }
+          required
+          className="mt-1 block w-full p-2 border-2 border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500"
+        />
+      </div>
       <div>
         <label
           htmlFor="family"
@@ -188,6 +210,7 @@ export default function Keys() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [editData, setEditData] = useState({
+    name: "",
     family: "",
     model: "",
     apiKey: "",
@@ -197,6 +220,7 @@ export default function Keys() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = {
+      name: formData.get("name"),
       family: formData.get("family"),
       model: formData.get("model"),
       apiKey: formData.get("apiKey"),
@@ -204,6 +228,7 @@ export default function Keys() {
     const id = nanoid();
     await db.apiKeys.add({
       id,
+      name: data.name?.toString() ?? "",
       model: data.model?.toString() ?? "",
       apiKey: data.apiKey?.toString() ?? "",
       family: data.family?.toString() ?? "",
@@ -215,6 +240,7 @@ export default function Keys() {
   const handleEdit = (file: any) => {
     setEditingId(file.id);
     setEditData({
+      name: file.name,
       family: file.family,
       model: file.model,
       apiKey: file.apiKey,
@@ -224,18 +250,19 @@ export default function Keys() {
   const handleSaveEdit = async () => {
     if (editingId) {
       await db.apiKeys.update(editingId, {
+        name: editData.name,
         family: editData.family,
         model: editData.model,
         apiKey: editData.apiKey,
       });
       setEditingId(null);
-      setEditData({ family: "", model: "", apiKey: "" });
+      setEditData({ name: "", family: "", model: "", apiKey: "" });
     }
   };
 
   const handleCancel = () => {
     setEditingId(null);
-    setEditData({ family: "", model: "", apiKey: "" });
+    setEditData({ name: "", family: "", model: "", apiKey: "" });
   };
 
   return (
@@ -267,10 +294,10 @@ export default function Keys() {
                     <div className="shrink-0"></div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
-                        {file.model}
+                        {file.name}
                       </p>
                       <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                        {file.family}
+                        {file.model} ({file.family})
                       </p>
                     </div>
                   </div>
