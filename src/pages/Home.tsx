@@ -45,7 +45,7 @@ function buildTranslationPrompt(
 ) {
   return `You are a translation assistant. Translate the following dialogues into **${targetLanguagePromptName}**.
 
-The input text comes from an SRT subtitle file.
+The input text comes from an SRT or ASS subtitle file.
 Each dialogue is separated by the token \`|||\`.
 
 ---
