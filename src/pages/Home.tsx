@@ -259,7 +259,6 @@ export default function Home() {
     const files = event.target.files;
     if (files) {
       await db.subtitles.clear();
-      const lfiles: SubFile[] = [];
       const sortedFiles = Array.from(files).sort((a, b) =>
         fileNameCollator.compare(a.name, b.name),
       );
@@ -276,7 +275,6 @@ export default function Home() {
             split: quitarNumerosYTiempos(text),
           });
         } else {
-          const dee = extractDialogsFromASS(text)
           await db.subtitles.add({
             id: id,
             filename: element.name,
@@ -286,7 +284,7 @@ export default function Home() {
           });
         }
       }
-      console.log(lfiles);
+      // console.log(lfiles);
       //setFiles(lfiles);
     }
   };

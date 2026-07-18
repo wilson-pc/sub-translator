@@ -15,6 +15,7 @@ const urls: Record<string, string | undefined> = {
   deepseek: "https://api.deepseek.com",
   kimi: "https://api.moonshot.ai/v1",
   openai: undefined,
+  qwen: "https://ws-plf93r5yk337ryct.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1"
 };
 
 function buildTranslationPrompt(sub: string, targetLanguagePromptName: string) {
