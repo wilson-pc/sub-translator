@@ -277,7 +277,6 @@ export default function Home() {
           });
         } else {
           const dee = extractDialogsFromASS(text)
-          console.log(dee)
           await db.subtitles.add({
             id: id,
             filename: element.name,
