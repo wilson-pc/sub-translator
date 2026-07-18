@@ -202,15 +202,21 @@ function extractDialogsFromASS(subtitleContent: string) {
       );
 
       if (match && match[1]) {
-        const dialogText = match[1]
+        // Detectar modo dibujo (\p1, \p2, etc.) ANTES de eliminar las etiquetas,
+        // ya que \pN está dentro de los bloques {...} que luego se eliminan.
+        const rawText = match[1];
+        if (/\\p[1-9]/.test(rawText)) {
+          // Placeholder vacío para mantener la correspondencia 1:1 con las líneas Dialogue
+          dialogs.push("");
+          continue;
+        }
+
+        const dialogText = rawText
           .replace(/\{[^}]*\}/g, "") // Eliminar etiquetas ASS como {\fad(...)} o {\pos(...)}
           .replace(/\\N/g, "\n") // Convertir saltos de línea
           .trim();
 
-        // Ignorar líneas con datos vectoriales (\p1)
-        if (!dialogText.includes("\\p1")) {
-          dialogs.push(dialogText);
-        }
+        dialogs.push(dialogText);
       } else {
         console.warn(`No se pudo extraer diálogo de: ${line}`);
       }
@@ -270,6 +276,8 @@ export default function Home() {
             split: quitarNumerosYTiempos(text),
           });
         } else {
+          const dee = extractDialogsFromASS(text)
+          console.log(dee)
           await db.subtitles.add({
             id: id,
             filename: element.name,
@@ -544,11 +552,10 @@ export default function Home() {
               onDragLeave={handleDragLeave}
               onDrop={handleDropFiles}
               onClick={handleDragAreaClick}
-              className={`w-full max-w-lg p-8 border-2 border-dashed rounded-lg text-center cursor-pointer transition-all ${
-                dragActive
-                  ? "border-gray-400 bg-gray-800"
-                  : "border-gray-600 hover:border-gray-500"
-              }`}
+              className={`w-full max-w-lg p-8 border-2 border-dashed rounded-lg text-center cursor-pointer transition-all ${dragActive
+                ? "border-gray-400 bg-gray-800"
+                : "border-gray-600 hover:border-gray-500"
+                }`}
             >
               <div className="flex flex-col items-center gap-2">
                 <svg
@@ -656,7 +663,7 @@ export default function Home() {
                               translateSingle(
                                 file,
                                 file.targetLanguageCode ??
-                                  selectedTargetLanguage.code,
+                                selectedTargetLanguage.code,
                               );
                             }}
                           >
