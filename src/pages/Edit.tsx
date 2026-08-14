@@ -6,7 +6,7 @@ import { restoreDialogsToASS, triggerFileDownload } from "../utils/ass";
 import { useParams } from "react-router";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db/db";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface ButtonProps {
@@ -67,19 +67,31 @@ export default function Edit() {
     () => db.subtitles.get(param.id ?? ""),
     [param.id],
   );
+
+  const [translatedList, setTranslatedList] = useState<string[]>([]);
+  const [loadedId, setLoadedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (subFile && subFile.id !== loadedId) {
+      setTranslatedList(subFile.splitTranslated || []);
+      setLoadedId(subFile.id);
+    }
+  }, [subFile, loadedId]);
+
   const download = async () => {
     const filename = `${subFile?.filename.replaceAll(".ass", "")}_es.ass`;
     const restored = restoreDialogsToASS(
       subFile?.original ?? "",
-      subFile?.splitTranslated ?? [],
+      translatedList,
     );
     triggerFileDownload(filename, restored);
   };
 
   const addRow = async (index: number) => {
     if (subFile) {
-      const newTranslated = [...(subFile.splitTranslated || [])];
+      const newTranslated = [...translatedList];
       newTranslated.splice(index + 1, 0, "");
+      setTranslatedList(newTranslated);
 
       await db.subtitles
         .where("id")
@@ -89,9 +101,10 @@ export default function Edit() {
   };
 
   const removeRow = async (index: number) => {
-    if (subFile && subFile.splitTranslated) {
-      const newTranslated = [...subFile.splitTranslated];
+    if (subFile) {
+      const newTranslated = [...translatedList];
       newTranslated.splice(index, 1);
+      setTranslatedList(newTranslated);
 
       await db.subtitles
         .where("id")
@@ -99,12 +112,14 @@ export default function Edit() {
         .modify({ splitTranslated: newTranslated });
     }
   };
-  const handleTranslatedChange = async (index: number, value: string) => {
-    if (subFile) {
-      const newTranslated = [...(subFile.splitTranslated || [])];
-      newTranslated[index] = value;
 
-      await db.subtitles
+  const handleTranslatedChange = (index: number, value: string) => {
+    const newTranslated = [...translatedList];
+    newTranslated[index] = value;
+    setTranslatedList(newTranslated);
+
+    if (subFile) {
+      db.subtitles
         .where("id")
         .equals(subFile.id)
         .modify({ splitTranslated: newTranslated });
@@ -120,7 +135,7 @@ export default function Edit() {
         <div className="flex justify-center w-full mb-6">
           <div className="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-lg">
             <h4 className="text-lg font-semibold">
-              {subFile?.split.length}/{subFile?.splitTranslated?.length}
+              {subFile?.split.length}/{translatedList.length}
             </h4>
           </div>
         </div>
@@ -131,11 +146,11 @@ export default function Edit() {
           {Array.from({
             length: Math.max(
               (subFile?.split || []).length,
-              (subFile?.splitTranslated || []).length,
+              translatedList.length,
             ),
           }).map((_, index) => {
             const originalDialog = subFile?.split[index] || "";
-            const translatedDialog = subFile?.splitTranslated?.[index] || "";
+            const translatedDialog = translatedList[index] || "";
             const hasError = translatedDialog.includes("[[error]]");
 
             return (
