@@ -670,18 +670,11 @@ export default function Home() {
                       )}
                       {file.state === "DONE" && (
                         <div className="flex items-center justify-center">
-                          {!file.splitTranslated?.some((line) =>
+                          {file.splitTranslated?.length !== file.split?.length ||
+                          file.splitTranslated?.some((line) =>
                             String(line || "").includes("[[error]]"),
                           ) ? (
-                            <button
-                              className="rounded-lg bg-gray-700 px-4 py-2 text-white hover:bg-gray-600"
-                              onClick={() => {
-                                download(file);
-                              }}
-                            >
-                              {t("common.download")}
-                            </button>
-                          ) : (
+
                             <button
                               className="group relative rounded-lg bg-amber-500 px-4 py-2 font-semibold text-white transition-colors hover:bg-amber-600"
                               onClick={() => {
@@ -692,6 +685,15 @@ export default function Home() {
                               <span className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 rounded-lg bg-amber-600 px-2 py-1 text-xs text-white group-hover:block">
                                 {t("home.unresolvedTooltip")}
                               </span>
+                            </button>
+                          ) : (
+                            <button
+                              className="rounded-lg bg-gray-700 px-4 py-2 text-white hover:bg-gray-600"
+                              onClick={() => {
+                                download(file);
+                              }}
+                            >
+                              {t("common.download")}
                             </button>
                           )}
 
